@@ -5,61 +5,36 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Setting;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     /**
-     * Define categories statically since they are core features requested in prompt.
-     */
-    private function getCategories()
-    {
-        return [
-            'top-up-koin' => [
-                'name' => 'Top Up Koin',
-                'slug' => 'top-up-koin',
-                'description' => 'Top up coin cepat, aman, dan harga terbaik.',
-                'image' => '/images/categories/coin.png',
-                'banner' => '/images/categories/banner-coin.png',
-            ],
-            'joki-live' => [
-                'name' => 'Joki Live',
-                'slug' => 'joki-live',
-                'description' => 'Jasa push win dan peningkatan statistik akun.',
-                'image' => '/images/categories/joki-live.png',
-                'banner' => '/images/categories/banner-joki-live.png',
-            ],
-            'stik-level-max' => [
-                'name' => 'Stik Level Max',
-                'slug' => 'stik-level-max',
-                'description' => 'Upgrade cue hingga level maksimal.',
-                'image' => '/images/categories/stik-level-max.png',
-                'banner' => '/images/categories/banner-stik.png',
-            ],
-            'joki-ring' => [
-                'name' => 'Joki Ring',
-                'slug' => 'joki-ring',
-                'description' => 'Jasa peningkatan rank ring secara aman.',
-                'image' => '/images/categories/joki-ring.png',
-                'banner' => '/images/categories/banner-ring.png',
-            ],
-            'pool-pass' => [
-                'name' => 'Pool Pass',
-                'slug' => 'pool-pass',
-                'description' => 'Pool Pass dan Elite Pool Pass dengan proses cepat.',
-                'image' => '/images/categories/pool-pass.png',
-                'banner' => '/images/categories/banner-poolpass.png',
-            ],
-        ];
-    }
-
-    /**
      * Show the category catalog.
      */
     public function index()
     {
-        $categories = $this->getCategories();
+        // Fetch categories from database
+        $categories = Category::all();
+        
+        // Define category order for display
+        $orderMap = [
+            'top-up-koin' => 0,
+            'joki-live' => 1,
+            'pool-pass' => 2,
+            'joki-ring' => 3,
+            'stik-level-max' => 4
+        ];
+        
+        // Sort categories according to predefined order
+        $categories = $categories->sort(function($a, $b) use ($orderMap) {
+            $orderA = $orderMap[$a->slug] ?? 99;
+            $orderB = $orderMap[$b->slug] ?? 99;
+            return $orderA <=> $orderB;
+        });
+        
         $settings = Setting::pluck('value', 'key')->all();
         
         // Fetch popular products based on order count (most purchased)
@@ -77,17 +52,14 @@ class ProductController extends Controller
      */
     public function showCategory($slug)
     {
-        $categories = $this->getCategories();
+        // Fetch category from database by slug
+        $category = Category::where('slug', $slug)->firstOrFail();
         
-        if (!array_key_exists($slug, $categories)) {
-            abort(404);
-        }
-
-        $category = $categories[$slug];
-        // Query products by category slug through the relationship
-        $products = Product::whereHas('category', function($query) use ($slug) {
-            $query->where('slug', $slug);
-        })->where('status', 'available')->get();
+        // Query products by category
+        $products = $category->products()
+            ->where('status', 'available')
+            ->get();
+            
         $settings = Setting::pluck('value', 'key')->all();
 
         return view('categories.show', compact('category', 'products', 'settings'));
@@ -99,10 +71,8 @@ class ProductController extends Controller
      */
     public function checkout(Request $request, $slug)
     {
-        $categories = $this->getCategories();
-        if (!array_key_exists($slug, $categories)) {
-            abort(404);
-        }
+        // Verify category exists
+        Category::where('slug', $slug)->firstOrFail();
 
         $request->validate([
             'product_id' => 'required|exists:products,id',

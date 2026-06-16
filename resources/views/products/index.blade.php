@@ -19,46 +19,30 @@
         <p class="text-sm text-gray-400 mt-3">Pilih salah satu kategori produk 8 Ball Pool profesional kami di bawah ini untuk memulai transaksi.</p>
     </div>
 
-    @php
-        // Sort categories to match the user's screenshot order:
-        // 1. Top Up Koin, 2. Joki Live, 3. Pool Pass, 4. Joki Ring, 5. Stik Level Max
-        $orderMap = [
-            'top-up-koin' => 0,
-            'joki-live' => 1,
-            'pool-pass' => 2,
-            'joki-ring' => 3,
-            'stik-level-max' => 4
-        ];
-        
-        $sortedCategories = collect($categories)->sortBy(function($cat) use ($orderMap) {
-            return $orderMap[$cat['slug']] ?? 99;
-        });
-    @endphp
-
     <!-- Categories Grid of Horizontal Cards (Premium Dark/Purple Theme) -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
-        @foreach($sortedCategories as $cat)
-            @php
-                // Map WebP card images
-                $image = asset('assets/katalog/topup-koin/topup.webp');
-                if ($cat['slug'] === 'joki-live') {
-                    $image = asset('assets/katalog/joki-live/joki live hero.webp');
-                } elseif ($cat['slug'] === 'stik-level-max') {
-                    $image = asset('assets/katalog/stik-level-maks/stik max.webp');
-                } elseif ($cat['slug'] === 'joki-ring') {
-                    $image = asset('assets/katalog/joki-ring/joki ring hero.webp');
-                } elseif ($cat['slug'] === 'pool-pass') {
-                    $image = asset('assets/katalog/pollpas/pollpass.webp');
-                }
-            @endphp
+        @foreach($categories as $cat)
+    @php
+        // Map WebP card images
+        $image = asset('assets/katalog/topup-koin/topup.webp');
+        if ($cat->slug === 'joki-live') {
+            $image = asset('assets/katalog/joki-live/joki live hero.webp');
+        } elseif ($cat->slug === 'stik-level-max') {
+            $image = asset('assets/katalog/stik-level-maks/stik max.webp');
+        } elseif ($cat->slug === 'joki-ring') {
+            $image = asset('assets/katalog/joki-ring/joki ring hero.webp');
+        } elseif ($cat->slug === 'pool-pass') {
+            $image = asset('assets/katalog/pollpas/pollpass.webp');
+        }
+    @endphp
 
-            <a href="{{ route('categories.show', $cat['slug']) }}" class="flex items-center gap-4 bg-gradient-to-r from-card-dark to-slate-950/40 border border-border-dark/60 hover:border-primary-purple/40 hover:shadow-glow hover:-translate-y-0.5 transition-all duration-300 rounded-2xl p-4 group relative overflow-hidden">
+            <a href="{{ route('categories.show', $cat->slug) }}" class="flex items-center gap-4 bg-gradient-to-r from-card-dark to-slate-950/40 border border-border-dark/60 hover:border-primary-purple/40 hover:shadow-glow hover:-translate-y-0.5 transition-all duration-300 rounded-2xl p-4 group relative overflow-hidden">
                 <!-- Decorative subtle neon purple background glow on hover -->
                 <div class="absolute -right-20 -top-20 w-40 h-40 rounded-full bg-primary-purple/5 group-hover:bg-primary-purple/10 blur-3xl transition-all duration-500"></div>
 
                 <!-- Left Column: Image Card Thumbnail -->
                 <div class="w-16 h-16 rounded-xl overflow-hidden border border-border-dark/80 bg-slate-950 relative shadow-md group-hover:border-primary-purple/40 transition-colors duration-300 shrink-0">
-                    <img src="{{ $image }}" alt="{{ $cat['name'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <img src="{{ $image }}" alt="{{ $cat->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <!-- Subtle gradient overlay on image -->
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950/30 to-transparent"></div>
                 </div>
@@ -71,11 +55,11 @@
                     </span>
                     <!-- Title -->
                     <h2 class="text-sm sm:text-base font-black text-white group-hover:text-primary-purple transition-colors duration-300 mt-1.5 uppercase tracking-wide truncate">
-                        {{ $cat['name'] }}
+                        {{ $cat->name }}
                     </h2>
                     <!-- Description -->
                     <p class="text-xs text-gray-400 mt-0.5 leading-relaxed truncate">
-                        {{ $cat['description'] }}
+                        {{ $cat->description }}
                     </p>
                 </div>
 

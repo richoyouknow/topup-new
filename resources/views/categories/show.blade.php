@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $category['name'] . ' - ChampionStore.id')
+@section('title', $category->name . ' - ChampionStore.id')
 
 @section('content')
 <div class="relative overflow-hidden min-h-screen">
@@ -12,14 +12,14 @@
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 flex flex-col gap-2">
             <span class="text-xs font-bold text-primary-purple uppercase tracking-wider">Kategori Game</span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">{{ $category['name'] }}</h1>
-            <p class="text-xs sm:text-sm text-gray-400 max-w-xl leading-relaxed mt-1">{{ $category['description'] }}</p>
+            <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">{{ $category->name }}</h1>
+            <p class="text-xs sm:text-sm text-gray-400 max-w-xl leading-relaxed mt-1">{{ $category->description }}</p>
         </div>
     </div>
 
     <!-- Main Content Grid -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <form id="checkout-form" action="{{ route('categories.checkout', $category['slug']) }}" method="POST" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <form id="checkout-form" action="{{ route('categories.checkout', $category->slug) }}" method="POST" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             @csrf
 
             <!-- Left Side: Category Info & Step 1 (Products List) -->
@@ -29,24 +29,24 @@
                     <!-- Category Image Card Thumbnail -->
                     @php
                         $image = asset('assets/katalog/topup-koin/topup.webp');
-                        if ($category['slug'] === 'joki-live') {
+                        if ($category->slug === 'joki-live') {
                             $image = asset('assets/katalog/joki-live/joki live hero.webp');
-                        } elseif ($category['slug'] === 'stik-level-max') {
+                        } elseif ($category->slug === 'stik-level-max') {
                             $image = asset('assets/katalog/stik-level-maks/stik max.webp');
-                        } elseif ($category['slug'] === 'joki-ring') {
+                        } elseif ($category->slug === 'joki-ring') {
                             $image = asset('assets/katalog/joki-ring/joki ring hero.webp');
-                        } elseif ($category['slug'] === 'pool-pass') {
+                        } elseif ($category->slug === 'pool-pass') {
                             $image = asset('assets/katalog/pollpas/pollpass.webp');
                         }
                     @endphp
                     <div class="w-20 h-20 shrink-0 rounded-2xl overflow-hidden border border-border-dark/80 bg-slate-950 shadow-glow relative">
-                        <img src="{{ $image }}" alt="{{ $category['name'] }}" class="w-full h-full object-cover">
+                        <img src="{{ $image }}" alt="{{ $category->name }}" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/25 to-transparent"></div>
                     </div>
 
                     <div class="flex-1 flex flex-col gap-4">
                         <div>
-                            <h2 class="text-xl font-extrabold text-white text-center sm:text-left">{{ $category['name'] }}</h2>
+                            <h2 class="text-xl font-extrabold text-white text-center sm:text-left">{{ $category->name }}</h2>
                             <p class="text-xs text-gray-400 mt-1.5 leading-relaxed text-center sm:text-left">Semua item 8 Ball Pool diproses secara legal dan aman dari banned. Waktu pengerjaan berkisar 5-15 menit saja.</p>
                         </div>
                         
@@ -96,7 +96,7 @@
                                 class="product-card-btn p-4 rounded-xl border border-border-dark bg-slate-950/50 hover:bg-slate-950 text-left hover:border-primary-purple/50 active:scale-[0.98] transition-all flex flex-col justify-between gap-3 group focus:outline-none {{ old('product_id') == $product->id ? 'border-primary-purple ring-1 ring-primary-purple shadow-glow bg-slate-950' : '' }}">
                             <div class="flex items-start justify-between gap-3">
                                 <div class="flex-1">
-                                    <span class="text-xs text-gray-500 group-hover:text-primary-purple/60 transition-colors uppercase tracking-wider font-semibold">{{ $category['name'] }}</span>
+                                    <span class="text-xs text-gray-500 group-hover:text-primary-purple/60 transition-colors uppercase tracking-wider font-semibold">{{ $category->name }}</span>
                                     <h3 class="text-sm font-extrabold text-white mt-1 group-hover:text-primary-purple transition-colors">{{ $product->name }}</h3>
                                 </div>
                                 <!-- 8 Ball Pool Logo Icon -->

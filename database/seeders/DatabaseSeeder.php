@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Faq;
@@ -41,7 +42,45 @@ class DatabaseSeeder extends Seeder
             Setting::updateOrCreate(['key' => $key], ['value' => $value]);
         }
 
-        // 3. Seed FAQs
+        // 3. Seed Categories
+        $categories = [
+            [
+                'name' => 'Top Up Koin',
+                'slug' => 'top-up-koin',
+                'description' => 'Top up coin cepat, aman, dan harga terbaik.',
+                'image_path' => '/assets/katalog/topup-koin/topup.webp',
+            ],
+            [
+                'name' => 'Joki Live',
+                'slug' => 'joki-live',
+                'description' => 'Jasa push win dan peningkatan statistik akun.',
+                'image_path' => '/assets/katalog/joki-live/joki live hero.webp',
+            ],
+            [
+                'name' => 'Pool Pass',
+                'slug' => 'pool-pass',
+                'description' => 'Pool Pass dan Elite Pool Pass dengan proses cepat.',
+                'image_path' => '/assets/katalog/pollpas/pollpass.webp',
+            ],
+            [
+                'name' => 'Joki Ring',
+                'slug' => 'joki-ring',
+                'description' => 'Jasa peningkatan rank ring secara aman.',
+                'image_path' => '/assets/katalog/joki-ring/joki ring hero.webp',
+            ],
+            [
+                'name' => 'Stik Level Max',
+                'slug' => 'stik-level-max',
+                'description' => 'Upgrade cue hingga level maksimal.',
+                'image_path' => '/assets/katalog/stik-level-maks/stik max.webp',
+            ],
+        ];
+
+        foreach ($categories as $category) {
+            Category::updateOrCreate(['slug' => $category['slug']], $category);
+        }
+
+        // 4. Seed FAQs
         $faqs = [
             [
                 'question' => 'Apakah pembelian item di sini aman dari resiko banned?',
@@ -312,6 +351,15 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($products as $product) {
+            $categorySlug = $product['category'];
+            unset($product['category']); // Remove the temporary category field
+            
+            // Get category ID from slug
+            $category = Category::where('slug', $categorySlug)->first();
+            if ($category) {
+                $product['category_id'] = $category->id;
+            }
+            
             Product::updateOrCreate(['slug' => $product['slug']], $product);
         }
     }
