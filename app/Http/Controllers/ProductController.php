@@ -119,13 +119,13 @@ class ProductController extends Controller
             'payment_proof' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
-        // Upload Payment Proof
+        // Upload Payment Proof to storage/app/public/uploads/payments
         $proofPath = null;
         if ($request->hasFile('payment_proof')) {
             $file = $request->file('payment_proof');
             $filename = time() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/payments'), $filename);
-            $proofPath = '/uploads/payments/' . $filename;
+            $file->move(storage_path('app/public/uploads/payments'), $filename);
+            $proofPath = '/storage/uploads/payments/' . $filename;
         }
 
         // Update Order

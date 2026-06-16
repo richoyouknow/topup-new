@@ -54,13 +54,13 @@ class AdminProductController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        // Handle Image Upload
+        // Handle Image Upload to storage/app/public/uploads/products
         $imagePath = null;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = time() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/products'), $filename);
-            $imagePath = '/uploads/products/' . $filename;
+            $file->move(storage_path('app/public/uploads/products'), $filename);
+            $imagePath = '/storage/uploads/products/' . $filename;
         }
 
         // Generate Slug
@@ -112,15 +112,15 @@ class AdminProductController extends Controller
 
         $imagePath = $product->image_path;
         if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product->image_path && File::exists(public_path($product->image_path))) {
-                File::delete(public_path($product->image_path));
+            // Delete old image from storage if exists
+            if ($product->image_path && File::exists(storage_path('app/public' . $product->image_path))) {
+                File::delete(storage_path('app/public' . $product->image_path));
             }
 
             $file = $request->file('image');
             $filename = time() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/products'), $filename);
-            $imagePath = '/uploads/products/' . $filename;
+            $file->move(storage_path('app/public/uploads/products'), $filename);
+            $imagePath = '/storage/uploads/products/' . $filename;
         }
 
         // Regen Slug only if name changed
@@ -153,9 +153,9 @@ class AdminProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // Delete image file
-        if ($product->image_path && File::exists(public_path($product->image_path))) {
-            File::delete(public_path($product->image_path));
+        // Delete image file from storage
+        if ($product->image_path && File::exists(storage_path('app/public' . $product->image_path))) {
+            File::delete(storage_path('app/public' . $product->image_path));
         }
 
         $product->delete();
@@ -168,8 +168,8 @@ class AdminProductController extends Controller
      */
     public function deleteImage(Product $product)
     {
-        if ($product->image_path && File::exists(public_path($product->image_path))) {
-            File::delete(public_path($product->image_path));
+        if ($product->image_path && File::exists(storage_path('app/public' . $product->image_path))) {
+            File::delete(storage_path('app/public' . $product->image_path));
         }
 
         $product->update(['image_path' => null]);

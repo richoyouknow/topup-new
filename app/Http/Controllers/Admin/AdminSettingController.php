@@ -54,43 +54,43 @@ class AdminSettingController extends Controller
             Setting::setValue('bank_accounts', json_encode([]));
         }
 
-        // Handle QRIS Image upload
+        // Handle QRIS Image upload to storage/app/public/uploads/settings
         if ($request->hasFile('qris_image')) {
             $oldQris = Setting::getValue('qris_image');
-            if ($oldQris && File::exists(public_path($oldQris))) {
-                File::delete(public_path($oldQris));
+            if ($oldQris && File::exists(storage_path('app/public' . $oldQris))) {
+                File::delete(storage_path('app/public' . $oldQris));
             }
 
             $file = $request->file('qris_image');
             $filename = 'qris_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/settings'), $filename);
-            Setting::setValue('qris_image', '/uploads/settings/' . $filename);
+            $file->move(storage_path('app/public/uploads/settings'), $filename);
+            Setting::setValue('qris_image', '/storage/uploads/settings/' . $filename);
         }
 
-        // Handle Website Logo upload
+        // Handle Website Logo upload to storage/app/public/uploads/settings
         if ($request->hasFile('website_logo')) {
             $oldLogo = Setting::getValue('website_logo');
-            if ($oldLogo && File::exists(public_path($oldLogo))) {
-                File::delete(public_path($oldLogo));
+            if ($oldLogo && File::exists(storage_path('app/public' . $oldLogo))) {
+                File::delete(storage_path('app/public' . $oldLogo));
             }
 
             $file = $request->file('website_logo');
             $filename = 'logo_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/settings'), $filename);
-            Setting::setValue('website_logo', '/uploads/settings/' . $filename);
+            $file->move(storage_path('app/public/uploads/settings'), $filename);
+            Setting::setValue('website_logo', '/storage/uploads/settings/' . $filename);
         }
 
-        // Handle Hero Image upload
+        // Handle Hero Image upload to storage/app/public/uploads/settings
         if ($request->hasFile('hero_image')) {
             $oldHero = Setting::getValue('hero_image');
-            if ($oldHero && File::exists(public_path($oldHero))) {
-                File::delete(public_path($oldHero));
+            if ($oldHero && File::exists(storage_path('app/public' . $oldHero))) {
+                File::delete(storage_path('app/public' . $oldHero));
             }
 
             $file = $request->file('hero_image');
             $filename = 'hero_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/settings'), $filename);
-            Setting::setValue('hero_image', '/uploads/settings/' . $filename);
+            $file->move(storage_path('app/public/uploads/settings'), $filename);
+            Setting::setValue('hero_image', '/storage/uploads/settings/' . $filename);
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Pengaturan berhasil diperbarui.');

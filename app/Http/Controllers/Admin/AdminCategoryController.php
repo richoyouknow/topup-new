@@ -42,8 +42,8 @@ class AdminCategoryController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = time() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/categories'), $filename);
-            $imagePath = '/uploads/categories/' . $filename;
+            $file->move(storage_path('app/public/uploads/categories'), $filename);
+            $imagePath = '/storage/uploads/categories/' . $filename;
         }
 
         $slug = Str::slug($request->name);
@@ -84,14 +84,14 @@ class AdminCategoryController extends Controller
 
         $imagePath = $category->image_path;
         if ($request->hasFile('image')) {
-            if ($category->image_path && File::exists(public_path($category->image_path))) {
-                File::delete(public_path($category->image_path));
+            if ($category->image_path && File::exists(storage_path('app/public' . $category->image_path))) {
+                File::delete(storage_path('app/public' . $category->image_path));
             }
 
             $file = $request->file('image');
             $filename = time() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/categories'), $filename);
-            $imagePath = '/uploads/categories/' . $filename;
+            $file->move(storage_path('app/public/uploads/categories'), $filename);
+            $imagePath = '/storage/uploads/categories/' . $filename;
         }
 
         $slug = $category->slug;
@@ -119,8 +119,8 @@ class AdminCategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if ($category->image_path && File::exists(public_path($category->image_path))) {
-            File::delete(public_path($category->image_path));
+        if ($category->image_path && File::exists(storage_path('app/public' . $category->image_path))) {
+            File::delete(storage_path('app/public' . $category->image_path));
         }
 
         $category->delete();
@@ -133,8 +133,8 @@ class AdminCategoryController extends Controller
      */
     public function deleteImage(Category $category)
     {
-        if ($category->image_path && File::exists(public_path($category->image_path))) {
-            File::delete(public_path($category->image_path));
+        if ($category->image_path && File::exists(storage_path('app/public' . $category->image_path))) {
+            File::delete(storage_path('app/public' . $category->image_path));
         }
 
         $category->update(['image_path' => null]);

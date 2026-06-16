@@ -28,15 +28,15 @@
                 <div class="bg-card-dark border border-border-dark rounded-2xl p-6 shadow-glow flex flex-col sm:flex-row gap-6 items-center sm:items-start">
                     <!-- Category Image Card Thumbnail -->
                     @php
-                        $image = asset('assets/katalog/topup-koin/topup.webp');
+                        $image = asset('storage/assets/katalog/topup-koin/topup.webp');
                         if ($category->slug === 'joki-live') {
-                            $image = asset('assets/katalog/joki-live/joki live hero.webp');
+                            $image = asset('storage/assets/katalog/joki-live/joki live hero.webp');
                         } elseif ($category->slug === 'stik-level-max') {
-                            $image = asset('assets/katalog/stik-level-maks/stik max.webp');
+                            $image = asset('storage/assets/katalog/stik-level-maks/stik max.webp');
                         } elseif ($category->slug === 'joki-ring') {
-                            $image = asset('assets/katalog/joki-ring/joki ring hero.webp');
+                            $image = asset('storage/assets/katalog/joki-ring/joki ring hero.webp');
                         } elseif ($category->slug === 'pool-pass') {
-                            $image = asset('assets/katalog/pollpas/pollpass.webp');
+                            $image = asset('storage/assets/katalog/pollpas/pollpass.webp');
                         }
                     @endphp
                     <div class="w-20 h-20 shrink-0 rounded-2xl overflow-hidden border border-border-dark/80 bg-slate-950 shadow-glow relative">
@@ -173,7 +173,7 @@
 
                     <div class="flex gap-3">
                         <button type="button" data-method="QRIS" class="payment-method-btn flex-1 py-5 rounded-xl border bg-slate-950/50 hover:bg-slate-950 hover:border-primary-purple/50 text-center flex flex-col items-center justify-center gap-2 active:scale-95 transition-all focus:outline-none {{ old('payment_method', 'QRIS') == 'QRIS' ? 'border-primary-purple ring-1 ring-primary-purple shadow-glow bg-slate-950' : 'border-border-dark' }}">
-                            <img src="{{ asset('assets/qris-logo.png') }}" alt="QRIS Logo" class="h-6 w-auto object-contain">
+                            <img src="{{ asset('storage/assets/qris-logo.png') }}" alt="QRIS Logo" class="h-6 w-auto object-contain">
                             <span class="text-[11px] font-bold text-white">QRIS</span>
                         </button>
                         

@@ -35,7 +35,7 @@
             <div class="relative w-full max-w-md rounded-3xl bg-card-dark border border-border-dark/60 shadow-glow overflow-hidden group hover:border-primary-purple/50 transition-all duration-500">
                 <!-- Hero Image -->
                 @php
-                    $heroImage = \App\Models\Setting::getValue('hero_image', asset('assets/katalog/topup-koin/topup.webp'));
+                    $heroImage = \App\Models\Setting::getValue('hero_image', asset('storage/assets/katalog/topup-koin/topup.webp'));
                     $heroDescription = \App\Models\Setting::getValue('hero_description', 'Dapatkan Coins, Cash, Legendary Cue, Cue Pieces, dan item premium 8 Ball Pool dengan harga terbaik dan proses secepat kilat.');
                 @endphp
                 

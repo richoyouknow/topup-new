@@ -23,16 +23,16 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
         @foreach($categories as $cat)
     @php
-        // Map WebP card images
-        $image = asset('assets/katalog/topup-koin/topup.webp');
+        // Map WebP card images from storage
+        $image = asset('storage/assets/katalog/topup-koin/topup.webp');
         if ($cat->slug === 'joki-live') {
-            $image = asset('assets/katalog/joki-live/joki live hero.webp');
+            $image = asset('storage/assets/katalog/joki-live/joki live hero.webp');
         } elseif ($cat->slug === 'stik-level-max') {
-            $image = asset('assets/katalog/stik-level-maks/stik max.webp');
+            $image = asset('storage/assets/katalog/stik-level-maks/stik max.webp');
         } elseif ($cat->slug === 'joki-ring') {
-            $image = asset('assets/katalog/joki-ring/joki ring hero.webp');
+            $image = asset('storage/assets/katalog/joki-ring/joki ring hero.webp');
         } elseif ($cat->slug === 'pool-pass') {
-            $image = asset('assets/katalog/pollpas/pollpass.webp');
+            $image = asset('storage/assets/katalog/pollpas/pollpass.webp');
         }
     @endphp
 
