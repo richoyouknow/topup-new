@@ -73,44 +73,67 @@
             </div>
         </div>
 
-        <!-- Image Upload -->
-        <div class="flex flex-col gap-2">
-            <span class="text-xs font-bold text-gray-300 uppercase tracking-wider">Gambar Produk</span>
-            
-            <!-- Current Image Display (if exists) -->
+        <!-- Image Upload - Cleaned Layout -->
+        <div class="bg-card-dark border border-border-dark rounded-2xl p-6 sm:p-8 shadow-glow flex flex-col gap-6">
+            <div class="flex items-center gap-3 pb-4 border-b border-border-dark/50">
+                <div class="w-2 h-2 rounded-full bg-primary-purple"></div>
+                <h2 class="text-sm font-bold text-white uppercase tracking-wider">Gambar Produk</h2>
+            </div>
+
+            <!-- Format Info -->
+            <div class="p-3 rounded-lg bg-blue-500/5 border border-blue-500/20 text-xs">
+                <span class="text-blue-300 font-semibold">Format: </span>
+                <span class="text-gray-300">JPG, PNG, WebP • Maks 2MB</span>
+            </div>
+
+            <!-- Current Image -->
             @if($product->image_path)
-            <div class="p-4 bg-slate-950 border border-border-dark rounded-xl flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                    <img src="{{ $product->image_path }}" alt="{{ $product->name }}" class="w-12 h-12 object-contain rounded-lg border border-border-dark bg-slate-900 p-1">
-                    <div class="flex flex-col gap-0.5">
-                        <span class="text-xs font-semibold text-gray-300">Gambar Saat Ini</span>
-                        <span class="text-[10px] text-gray-500">Klik tombol di bawah untuk mengganti atau menghapus</span>
+            <div class="flex flex-col gap-3">
+                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Gambar Saat Ini</span>
+                <div class="p-4 bg-slate-950 border border-border-dark rounded-lg flex items-center gap-4">
+                    <img src="{{ $product->image_path }}" alt="{{ $product->name }}" class="w-14 h-14 object-contain rounded border border-border-dark bg-slate-900 p-1.5 flex-shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-gray-300">Sedang ditampilkan di toko</p>
                     </div>
+                    <button type="button" onclick="document.getElementById('delete-image-form').submit();" class="px-3 py-2 text-xs font-semibold text-red-400 hover:text-red-300 hover:bg-red-500/10 border border-red-500/30 rounded transition-colors flex-shrink-0">
+                        Hapus
+                    </button>
                 </div>
-                <button type="button" onclick="document.getElementById('delete-image-form').submit();" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 text-[10px] font-semibold rounded-lg transition-all">
-                    Hapus
-                </button>
             </div>
             @endif
-            
-            <div class="relative flex flex-col items-center justify-center p-5 border border-dashed border-border-dark hover:border-primary-purple/40 rounded-xl bg-slate-950/40 cursor-pointer transition-all group">
-                <input type="file" name="image" id="image" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
-                
-                <!-- Upload Prompt -->
-                <div class="flex flex-col items-center text-center gap-1 {{ $product->image_path ? 'hidden' : '' }}" id="upload-prompt">
-                    <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-purple transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                    </svg>
-                    <span class="text-xs text-gray-400">Pilih berkas gambar baru</span>
-                    <span class="text-[9px] text-gray-600">Maks. 2MB (kosongkan jika tidak diubah)</span>
-                </div>
 
-                <!-- Image Preview (Prefilled with current image path if exists) -->
-                <div class="flex flex-col items-center gap-1.5 {{ $product->image_path ? 'hidden' : '' }}" id="upload-preview-container">
-                    <img src="{{ $product->image_path ?? '' }}" id="upload-preview-img" class="w-20 h-20 object-contain rounded-lg border border-border-dark bg-slate-950 p-1">
-                    <span class="text-[9px] text-primary-purple font-semibold truncate max-w-[150px]" id="upload-preview-name">Gambar Baru</span>
+            <!-- Upload Area -->
+            <div class="flex flex-col gap-2">
+                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">{{ $product->image_path ? 'Gambar Baru (Opsional)' : 'Upload Gambar (Wajib)' }}</span>
+                <div class="relative flex flex-col items-center justify-center p-6 border-2 border-dashed border-border-dark hover:border-primary-purple/50 rounded-lg bg-slate-950/30 cursor-pointer transition-all group">
+                    <input type="file" name="image" id="image" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer z-10">
+                    
+                    <!-- Upload Prompt -->
+                    <div class="flex flex-col items-center text-center gap-2" id="upload-prompt">
+                        <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-purple transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        <div>
+                            <p class="text-xs font-semibold text-gray-200">Klik atau drag gambar ke sini</p>
+                            <p class="text-[11px] text-gray-500 mt-0.5">Gambar berkualitas tinggi untuk hasil terbaik</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="hidden flex-col items-center gap-2" id="upload-preview-container">
+                        <img src="" id="upload-preview-img" class="w-16 h-16 object-contain rounded border border-border-dark bg-slate-900 p-1">
+                        <div class="text-center">
+                            <p class="text-xs font-semibold text-primary-purple truncate max-w-[200px]" id="upload-preview-name">img.png</p>
+                            <button type="button" onclick="document.getElementById('image').click()" class="text-[11px] text-gray-500 hover:text-primary-purple transition-colors mt-1">Ganti</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Info Text -->
+            @if($product->image_path)
+            <p class="text-xs text-gray-500">💡 Kosongkan jika tidak ada perubahan — gambar lama akan tetap digunakan</p>
+            @endif
         </div>
 
         <!-- Form Actions -->

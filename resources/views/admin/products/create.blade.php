@@ -72,26 +72,44 @@
             </div>
         </div>
 
-        <!-- Image Upload -->
-        <div class="flex flex-col gap-2">
-            <span class="text-xs font-bold text-gray-300 uppercase tracking-wider">Gambar Produk</span>
-            
-            <div class="relative flex flex-col items-center justify-center p-5 border border-dashed border-border-dark hover:border-primary-purple/40 rounded-xl bg-slate-950/40 cursor-pointer transition-all group">
-                <input type="file" name="image" id="image" required accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
-                
-                <!-- Upload Prompt -->
-                <div class="flex flex-col items-center text-center gap-1" id="upload-prompt">
-                    <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-purple transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                    </svg>
-                    <span class="text-xs text-gray-400">Pilih berkas gambar</span>
-                    <span class="text-[9px] text-gray-600">JPEG, PNG, JPG, WEBP (maks. 2MB)</span>
-                </div>
+        <!-- Image Upload - Cleaned Layout -->
+        <div class="bg-card-dark border border-border-dark rounded-2xl p-6 sm:p-8 shadow-glow flex flex-col gap-6">
+            <div class="flex items-center gap-3 pb-4 border-b border-border-dark/50">
+                <div class="w-2 h-2 rounded-full bg-primary-purple"></div>
+                <h2 class="text-sm font-bold text-white uppercase tracking-wider">Gambar Produk</h2>
+            </div>
 
-                <!-- Image Preview -->
-                <div class="hidden flex-col items-center gap-1.5" id="upload-preview-container">
-                    <img src="" id="upload-preview-img" class="w-20 h-20 object-contain rounded-lg border border-border-dark bg-slate-950 p-1">
-                    <span class="text-[9px] text-primary-purple font-semibold truncate max-w-[150px]" id="upload-preview-name">img.png</span>
+            <!-- Format Info -->
+            <div class="p-3 rounded-lg bg-blue-500/5 border border-blue-500/20 text-xs">
+                <span class="text-blue-300 font-semibold">Format: </span>
+                <span class="text-gray-300">JPG, PNG, WebP • Maks 2MB</span>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="flex flex-col gap-2">
+                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Upload Gambar (Wajib)</span>
+                <div class="relative flex flex-col items-center justify-center p-6 border-2 border-dashed border-border-dark hover:border-primary-purple/50 rounded-lg bg-slate-950/30 cursor-pointer transition-all group">
+                    <input type="file" name="image" id="image" required accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer z-10">
+                    
+                    <!-- Upload Prompt -->
+                    <div class="flex flex-col items-center text-center gap-2" id="upload-prompt">
+                        <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-purple transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        <div>
+                            <p class="text-xs font-semibold text-gray-200">Klik atau drag gambar ke sini</p>
+                            <p class="text-[11px] text-gray-500 mt-0.5">Gunakan gambar berkualitas tinggi untuk tampilan terbaik</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="hidden flex-col items-center gap-2" id="upload-preview-container">
+                        <img src="" id="upload-preview-img" class="w-16 h-16 object-contain rounded border border-border-dark bg-slate-900 p-1">
+                        <div class="text-center">
+                            <p class="text-xs font-semibold text-primary-purple truncate max-w-[200px]" id="upload-preview-name">img.png</p>
+                            <button type="button" onclick="document.getElementById('image').click()" class="text-[11px] text-gray-500 hover:text-primary-purple transition-colors mt-1">Ganti</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
