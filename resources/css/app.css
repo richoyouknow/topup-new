@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Inter', 'Inter Fallback', 'Arial', 'Helvetica', sans-serif;
+    
+    /* Custom Theme Colors */
+    --color-bg-dark: #07070f;
+    --color-primary-purple: #8b5cf6;
+    --color-card-dark: #111827;
+    --color-border-dark: #1f2937;
+    
+    /* Shadows */
+    --shadow-glow: 0 0 15px rgba(139, 92, 246, 0.15);
+    --shadow-glow-hover: 0 0 25px rgba(139, 92, 246, 0.35);
+    --shadow-glow-button: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #07070f;
+}
+::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #8b5cf6;
+}
+
+body {
+    background-color: #07070f;
+    color: #ffffff;
+    font-family: var(--font-sans);
+}
+
+/* Smooth Accordion Transition */
+.faq-collapse {
+    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+}
